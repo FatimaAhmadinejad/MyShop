@@ -14,6 +14,7 @@ import './assets/styles/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals'
 import HomeScreen from './screen/HomeScreen.jsx';
+import CategoryScreen from './screen/CategoryScreen.jsx';
 import ProductScreen from './screen/ProductScreen.jsx';
 import CartScreen from './screen/CartScreen.jsx';
 import LoginScreen from './screen/LoginScreen.jsx'
@@ -36,6 +37,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
    <Route path='/' element={<App />}>
     <Route index={true} path='/' element={<HomeScreen />} />
+    <Route path="/category/:categoryName" element={<CategoryScreen />} />
     <Route path='/page/:pageNumber' element={<HomeScreen />} />
     <Route path='/search/:keyword' element={<HomeScreen />} />
     <Route path='/search/:keyword/page/:pageNumber' element={<HomeScreen />} />
@@ -43,6 +45,7 @@ const router = createBrowserRouter(
     <Route path='/cart' element={<CartScreen/>} />
     <Route path='/login' element={<LoginScreen/>}/>
     <Route path='/register' element={<RegisterScreen/>}/>
+    
 
     <Route path='' element={<PrivateRoutes/>}>
     <Route path='/shipping' element={<ShippingAddress/>}/>

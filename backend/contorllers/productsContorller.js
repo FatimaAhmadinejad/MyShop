@@ -14,26 +14,68 @@ const getProducts = asyncHandler(async(req,res) => {
         },
       }
     : {};
-    const count = await Product.countDocuments({...keyword});
 
-    const products = await Product.find({...keyword})
+     const category = req.query.category;
+    const filter = { ...keyword };
+    if (category) {
+      filter.category = category; // فقط محصولات آن دسته‌بندی
+    } 
+    const count = await Product.countDocuments(filter);
+
+    const products = await Product.find(filter)
     .limit(pageSize)
     .skip(pageSize * (page - 1))
     ;
-    res.json({products, page, pages: Math.ceil(count / pageSize)});
+  const productsWithRealRatings = products.map(product => {
+  const realNumReviews = product.reviews.length;
+  const realRating = realNumReviews > 0
+    ? product.reviews.reduce((acc, r) => acc + r.rating, 0) / realNumReviews
+    : 0;
+  return {
+    ...product._doc,
+    rating: realRating,
+    numReviews: realNumReviews
+  };
+});
+
+const productsWithRatings = products.map(product => {
+  const realNumReviews = product.reviews.length;
+  const realRating = realNumReviews > 0
+    ? product.reviews.reduce((acc, r) => acc + r.rating, 0) / realNumReviews
+    : 0;
+  return {
+    ...product._doc,
+    rating: realRating,
+    numReviews: realNumReviews
+  };
+});
+
+res.json({ products: productsWithRatings, page, pages: Math.ceil(count / pageSize) });
 });
 // @desc    Fetch all products
 //@route    GET /api/products:id
 //@access   Public
-const getProductsById = asyncHandler(async(req,res) => {
-    const product = await Product.findById(req.params.id);
-if(product) {
-  return res.json(product);
-}else{
-res.status(404);
-throw new Error('Product not found')
-}
+const getProductsById = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    // محاسبه review واقعی
+    const realNumReviews = product.reviews.length;
+    const realRating = realNumReviews > 0
+      ? product.reviews.reduce((acc, r) => acc + r.rating, 0) / realNumReviews
+      : 0;
+
+    return res.json({
+      ...product._doc,      // داده اصلی محصول
+      rating: realRating,   // مقدار واقعی یا صفر
+      numReviews: realNumReviews // تعداد واقعی یا صفر
+    });
+  } else {
+    res.status(404);
+    throw new Error('Product not found');
+  }
 });
+
 // @desc    Create A Product
 //@route    POST /api/products
 //@access   Private/Admin
@@ -121,9 +163,13 @@ const createProductReview = asyncHandler(async (req, res) => {
 
     product.numReviews = product.reviews.length;
 
+    if (product.reviews.length > 0) {
     product.rating =
       product.reviews.reduce((acc, item) => item.rating + acc, 0) /
-      product.reviews.length;
+      product.reviews.length;}
+      else{
+         product.rating = 0;
+      }
 
     await product.save();
     res.status(201).json({ message: 'Review added' });
@@ -137,5 +183,8 @@ const getTopProducts = asyncHandler(async(req,res) => {
   const products = await Product.find({}).sort({ Rating: -1 }).limit(3);
   res.status(200).json(products)
 });
-
-export {getProducts,getProductsById,createProduct,UpdateProduct,DeleteProduct,createProductReview,getTopProducts};
+const getCategories = asyncHandler(async (req, res) => {
+  const categories = await Product.distinct('category');
+  res.json(categories);
+});
+export {getProducts,getProductsById,createProduct,UpdateProduct,DeleteProduct,createProductReview,getTopProducts,getCategories};   

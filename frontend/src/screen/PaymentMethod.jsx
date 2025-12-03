@@ -7,7 +7,7 @@ import FromContainer from '../compontent/FromContainer.jsx';
 import {savePaymentMethod} from '../slices/cartSlice.js';
 
 const PaymentMethod = () => {
-    const [paymentMethod,setPaymentMethod] = useState('ZarinPal');
+    const [paymentMethod,setPaymentMethod] = useState('PayPal');
     const submitHandler = (e) => {
         e.preventDefault();
         dispatch(savePaymentMethod(paymentMethod));
@@ -37,10 +37,10 @@ const PaymentMethod = () => {
                 <Form.Check
                 type='radio'
                 className='my-2'
-                label='ZarinPal or Credit Card'
-                id='ZarinPal'
+                label='PayPal or Credit Card'
+                id='PayPal'
                 name='paymentMethod'
-                value='ZarinPal'
+                value='PayPal'
                 checked
                 onChange={(e) => setPaymentMethod(e.target.value)}></Form.Check>
                 </Col>

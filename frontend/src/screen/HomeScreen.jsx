@@ -8,9 +8,13 @@ import Paginate from '../compontent/Paginate.jsx'
 import Meta from '../compontent/Meta.jsx'
 import { useGetProductsQuery } from '../slices/productsApiSlice'
 const Homescreen = () => {
-  const {pageNumber,keyword} = useParams();
+  let { pageNumber = 1, keyword } = useParams();
+  const page = Number(pageNumber) || 1;
 
-  const {data,isLoading,error} = useGetProductsQuery({keyword,pageNumber});
+  const { data, isLoading, error } = useGetProductsQuery({
+  keyword,
+  pageNumber: page,
+});
   return (
     <>
     {!keyword ? <ProductCarousel/> : <Link to='/' className='btn btn-light'>Go Back</Link>}

@@ -7,6 +7,9 @@ import { useSelector,useDispatch} from 'react-redux';
 import {useLogoutMutation} from '../slices/userApiSlice.js'
 import {logout} from '../slices/authSlice.js'
 import SearchBox from '../compontent/SearchBox.jsx'
+import { useGetCategoriesQuery } from '../slices/apiSlice';
+import { Link } from 'react-router-dom';
+
 const Header = () => {
   const {cartItems} = useSelector((state) => state.cart);
   const {userInfo} = useSelector((state) => state.auth);
@@ -25,6 +28,8 @@ const Header = () => {
       console.log(err)
     }
   }
+  const { data: categories, isLoading, isError } = useGetCategoriesQuery();
+
   return (
     <header>
         <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
@@ -36,7 +41,16 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <SearchBox/>
+             <SearchBox/>
+             <NavDropdown title="Categories" id="categories-dropdown">
+                {isLoading && <NavDropdown.Item>Loading...</NavDropdown.Item>}
+                {isError && <NavDropdown.Item className="text-danger">Error loading categories</NavDropdown.Item>}
+                {categories && categories.map((cat,index) => (
+               <LinkContainer key={index} to={`/category/${cat}`}>
+               <NavDropdown.Item>{cat}</NavDropdown.Item>
+               </LinkContainer>
+             ))}
+           </NavDropdown>
               <Nav.Link href="/cart">
               <FaShoppingCart/> Cart
                 {

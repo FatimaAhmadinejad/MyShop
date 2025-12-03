@@ -7,6 +7,7 @@ import productsRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/usersRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/UpdateRoutes.js'
+import categoryRoutes from './routes/categoryRoutes.js';
 import cookieParser from 'cookie-parser';
 
 
@@ -35,6 +36,7 @@ app.use('/api/products',productsRoutes);
 app.use('/api/users',userRoutes);
 app.use('/api/orders',orderRoutes);
 app.use('/api/upload',uploadRoutes);
+app.use('/api/categories', categoryRoutes);
 
 if (process.env.NODE_ENV === 'production') {
     const __dirname = path.resolve();
