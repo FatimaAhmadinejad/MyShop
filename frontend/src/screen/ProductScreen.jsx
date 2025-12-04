@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import {useParams,useNavigate} from "react-router-dom"
 import { Link } from "react-router-dom";
 import {Form,Row,Col,Image,ListGroup,Card,Button,} from "react-bootstrap";
@@ -18,6 +18,23 @@ const [qty,setQty] = useState(1);
 const [rating,SetRating] = useState(0);
 const [comment,SetComment] = useState('');
 const {data:product,isLoading,refetch,error} = useGetProductDetailsQuery(productId);
+const [recommended, setRecommended] = useState([]);
+
+// ******** RECOMMENDER SYSTEM ********
+useEffect(() => {
+  const fetchRecommended = async () => {
+    try {
+      const res = await fetch(`http://127.0.0.1:8000/recommend/${productId}`);
+      const data = await res.json();
+      setRecommended(data.recommended || []);
+    } catch (error) {
+      console.error("Recommender error:", error);
+    }
+  };
+
+  fetchRecommended();
+}, [productId]);
+
 const [createReview,{ isLoading: isReviewLoading,}] = useCreateReviewsMutation();
 const { userInfo } = useSelector((state) => state.auth);
 const addToCartHandler = () => {
@@ -176,6 +193,27 @@ const submitHandler = async (e) => {
      </Row>
      </>
      )}
+     {/* ******** RECOMMENDED PRODUCTS ******** */}
+{recommended.length > 0 && (
+  <Row className='mt-5'>
+    <h3>Recommended Products</h3>
+    {recommended.map((item) => (
+      <Col key={item.id} sm={12} md={6} lg={4} xl={3}>
+        <Link to={`/product/${item.id}`} style={{ textDecoration: 'none' }}>
+          <Card className="my-3 p-3 rounded">
+            <Card.Img src={item.image || "/images/placeholder.png"} variant="top" />
+            <Card.Body>
+              <Card.Title as="div">
+                <strong>{item.name}</strong>
+              </Card.Title>
+              <Card.Text as="h3">${item.price}</Card.Text>
+            </Card.Body>
+          </Card>
+        </Link>
+      </Col>
+    ))}
+  </Row>
+)}
     </>
   )
 }
