@@ -63,7 +63,7 @@ const submitHandler = async (e) => {
         <Meta title={product.name}/>
       <Row>
       <Col md="5">
-         <Image src={product.image} alt={product.name} fluid/>
+         <Image src={product.image} alt={product.name}  className="product-screen-img"/>
           </Col>
          <Col md="4">
          <ListGroup variant="flush">
@@ -200,12 +200,15 @@ const submitHandler = async (e) => {
     {recommended.map((item) => (
       <Col key={item.id} sm={12} md={6} lg={4} xl={3}>
         <Link to={`/product/${item.id}`} style={{ textDecoration: 'none' }}>
-          <Card className="my-3 p-3 rounded">
-            <Card.Img src={item.image || "/images/placeholder.png"} variant="top" />
+          <Card className="my-3 p-3 rounded product-card">
+            <Card.Img src={item.image || "/images/placeholder.png"} variant="top" className="product-img" />
             <Card.Body>
               <Card.Title as="div">
                 <strong>{item.name}</strong>
               </Card.Title>
+              <Card.Text as='div'>
+               <Rating value={product.rating || 0} text={`${product.numReviews || 0}reviews`}/>
+              </Card.Text>
               <Card.Text as="h3">${item.price}</Card.Text>
             </Card.Body>
           </Card>
