@@ -9,6 +9,7 @@ import {logout} from '../slices/authSlice.js'
 import SearchBox from '../compontent/SearchBox.jsx'
 import { useGetCategoriesQuery } from '../slices/apiSlice';
 import { Link } from 'react-router-dom';
+import Filter from './Filter.jsx';
 
 const Header = () => {
   const {cartItems} = useSelector((state) => state.cart);
@@ -42,6 +43,7 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
              <SearchBox/>
+             <Filter />
              <NavDropdown title="Categories" id="categories-dropdown">
                 {isLoading && <NavDropdown.Item>Loading...</NavDropdown.Item>}
                 {isError && <NavDropdown.Item className="text-danger">Error loading categories</NavDropdown.Item>}

@@ -19,18 +19,36 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     // دسته‌بندی‌ها
     getCategories: builder.query({
-      query: () => '/api/categories', // مسیر backend
-      transformResponse: (response) => Array.isArray(response) ? response : [], // همیشه آرایه
+      query: () => '/api/categories',
+      transformResponse: (response) =>
+        Array.isArray(response) ? response : [],
       providesTags: ['Category'],
     }),
 
     // محصولات
     getProducts: builder.query({
-      query: ({ keyword = '', pageNumber = 1, category = '' }) => {
-        let url = `/api/products?pageNumber=${pageNumber}`;
-        if (keyword) url += `&keyword=${keyword}`;
-        if (category) url += `&category=${category}`;
-        return url;
+      query: ({
+        keyword = '',
+        category = '',
+        brand = '',
+        minPrice,
+        maxPrice,
+        sort = '',
+        pageNumber = 1,
+      } = {}) => {
+        const params = { pageNumber };
+
+        if (keyword) params.keyword = keyword;
+        if (category) params.category = category;
+        if (brand) params.brand = brand;
+        if (minPrice !== undefined) params.minPrice = minPrice;
+        if (maxPrice !== undefined) params.maxPrice = maxPrice;
+        if (sort) params.sort = sort;
+
+        return {
+          url: '/api/products',
+          params,
+        };
       },
       providesTags: ['Product'],
       refetchOnMountOrArgChange: true,
@@ -38,4 +56,8 @@ export const apiSlice = createApi({
   }),
 });
 
-export const { useGetCategoriesQuery, useGetProductsQuery } = apiSlice;
+export const {
+  useGetCategoriesQuery,
+  useGetProductsQuery,
+} = apiSlice;
+

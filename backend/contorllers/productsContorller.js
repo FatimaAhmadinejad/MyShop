@@ -16,29 +16,53 @@ const getProducts = asyncHandler(async(req,res) => {
     : {};
 
      const category = req.query.category;
-    const filter = { ...keyword };
-    if (category) {
-      filter.category = category; // فقط محصولات آن دسته‌بندی
+     const brand = req.query.brand;
+     const minPrice = req.query.minPrice;
+     const maxPrice = req.query.maxPrice;
+     const sort = req.query.sort;
+     const filter = { ...keyword };
+
+     if (category) {
+     filter.category = category;
+    }
+
+     if (brand) {
+      filter.brand = brand;
+    }
+
+     if (minPrice || maxPrice) {
+       filter.price = {};
+     if (minPrice) filter.price.$gte = Number(minPrice);
+     if (maxPrice) filter.price.$lte = Number(maxPrice);
     } 
+ 
     const count = await Product.countDocuments(filter);
 
+    let sortOption = {};
+
+   switch (sort) {
+  case 'price_asc':
+    sortOption.price = 1;
+    break;
+  case 'price_desc':
+    sortOption.price = -1;
+    break;
+  case 'rating_desc':
+    sortOption.rating = -1;
+    break;
+  default:
+    sortOption.createdAt = -1;
+}
+
+
     const products = await Product.find(filter)
+    .sort(sortOption)
     .limit(pageSize)
     .skip(pageSize * (page - 1))
     ;
-  const productsWithRealRatings = products.map(product => {
-  const realNumReviews = product.reviews.length;
-  const realRating = realNumReviews > 0
-    ? product.reviews.reduce((acc, r) => acc + r.rating, 0) / realNumReviews
-    : 0;
-  return {
-    ...product._doc,
-    rating: realRating,
-    numReviews: realNumReviews
-  };
-});
+  
 
-const productsWithRatings = products.map(product => {
+  const productsWithRatings = products.map(product => {
   const realNumReviews = product.reviews.length;
   const realRating = realNumReviews > 0
     ? product.reviews.reduce((acc, r) => acc + r.rating, 0) / realNumReviews
@@ -184,7 +208,13 @@ const getTopProducts = asyncHandler(async(req,res) => {
   res.status(200).json(products)
 });
 const getCategories = asyncHandler(async (req, res) => {
-  const categories = await Product.distinct('category');
-  res.json(categories);
+  const categories = await Product.distinct('category'); // همه دسته‌ها
+  res.status(200).json( categories );
 });
-export {getProducts,getProductsById,createProduct,UpdateProduct,DeleteProduct,createProductReview,getTopProducts,getCategories};   
+
+
+const getBrands = async (req, res) => {
+  const brands = await Product.find().distinct('brand'); // یا populate و map
+   res.status(200).json(brands);
+};
+export {getProducts,getProductsById,createProduct,UpdateProduct,DeleteProduct,createProductReview,getTopProducts,getCategories,getBrands};   

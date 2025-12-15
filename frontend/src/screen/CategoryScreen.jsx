@@ -1,25 +1,30 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { useGetProductsQuery } from '../slices/apiSlice';
-import Product from '../compontent/Product'; // فرض بر این است که کامپوننت Product برای نمایش محصول داری
+import Product from '../compontent/Product';
 import { Row, Col } from 'react-bootstrap';
+import Paginate from '../compontent/Paginate';
 
 const CategoryScreen = () => {
   const { categoryName } = useParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
 
   const { data, isLoading, isError, refetch } = useGetProductsQuery({
-    category: categoryName, });
+    category: categoryName,
+    pageNumber: currentPage,
+  });
 
-    React.useEffect(() => {
-  refetch();
-}, [categoryName, refetch]);
-
-
-  const products = data && data.products ? data.products : [];
-  
+  React.useEffect(() => {
+    refetch();
+  }, [categoryName, currentPage, refetch]);
 
   if (isLoading) return <h2>Loading...</h2>;
   if (isError) return <h2>Error loading products</h2>;
+
+  const products = data?.products || [];
+  const page = data?.page || 1;
+  const pages = data?.pages || 1;
 
   return (
     <>
@@ -31,8 +36,19 @@ const CategoryScreen = () => {
           </Col>
         ))}
       </Row>
+
+      {pages > 1 && (
+        <Paginate
+          pages={pages}
+          page={page}
+          isFilterScreen={true} // یا flag جدا برای CategoryScreen
+          category={categoryName}
+        />
+      )}
     </>
   );
 };
 
 export default CategoryScreen;
+
+

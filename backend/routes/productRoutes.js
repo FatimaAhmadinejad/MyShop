@@ -7,11 +7,13 @@ import {
      DeleteProduct,
      createProductReview,
      getTopProducts,
-     getCategories
+     getCategories,
+     getBrands
      } from '../contorllers/productsContorller.js';
 import {protect,admin} from '../middleware/authMiddleware.js'
 const router = express.Router();
 router.get('/categories', getCategories);
+router.get('/brands', getBrands);
 router.get('/top',getTopProducts);
 router.route('/').get(getProducts).post(protect,admin,createProduct)
 router.route('/:id').get(getProductsById).put(protect,admin,UpdateProduct).delete(protect,admin,DeleteProduct);

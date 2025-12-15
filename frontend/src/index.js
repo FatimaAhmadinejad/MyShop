@@ -27,32 +27,33 @@ import OrderScreen from './screen/OrderScreen.jsx';
 import AdminRoute from './compontent/Admin/AdminRoute.jsx'
 import OrderListScreen from './screen/admin/OrderListScreen.jsx';
 import ProfileScreen from './screen/ProfileScreen.jsx';
+import FilterScreen from './screen/FilterScreen.jsx';
 import ProductEdit from './screen/admin/ProductEditScreen.jsx'
 import UsersList from './screen/admin/UsersListScreen.jsx'
 import {HelmetProvider} from 'react-helmet-async'
 import { FastDom } from 'bskl';
 
 const Dom = new FastDom
-const router = createBrowserRouter(
+     const router = createBrowserRouter(
   createRoutesFromElements(
    <Route path='/' element={<App />}>
     <Route index={true} path='/' element={<HomeScreen />} />
-    <Route path="/category/:categoryName" element={<CategoryScreen />} />
     <Route path='/page/:pageNumber' element={<HomeScreen />} />
     <Route path='/search/:keyword' element={<HomeScreen />} />
     <Route path='/search/:keyword/page/:pageNumber' element={<HomeScreen />} />
+    <Route path='/products/filter' element={<FilterScreen />} />
+    <Route path="/category/:categoryName" element={<CategoryScreen />} />
     <Route path='/product/:id' element={<ProductScreen/>} />
     <Route path='/cart' element={<CartScreen/>} />
     <Route path='/login' element={<LoginScreen/>}/>
     <Route path='/register' element={<RegisterScreen/>}/>
-    
 
     <Route path='' element={<PrivateRoutes/>}>
     <Route path='/shipping' element={<ShippingAddress/>}/>
     <Route path='/payment'  element={<PaymentMethod/>}/>
-   <Route path='/placeorder' element={<PlaceOrderScreen/>}/>
-   <Route path='/order/:id' element={<OrderScreen/>}/>
-   <Route path='/profile' element={<ProfileScreen/>}/>
+    <Route path='/placeorder' element={<PlaceOrderScreen/>}/>
+    <Route path='/order/:id' element={<OrderScreen/>}/>
+    <Route path='/profile' element={<ProfileScreen/>}/>
     </Route>
 
     <Route path='' element={<AdminRoute/>}>
