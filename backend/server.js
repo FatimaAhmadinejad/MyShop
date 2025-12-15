@@ -9,15 +9,12 @@ import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/UpdateRoutes.js'
 import categoryRoutes from './routes/categoryRoutes.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';  // ← اضافه کن
 
-
-// ← این خط اول اجرا شود
 dotenv.config();
 
 const port = process.env.PORT || 5000;
 
-
-// حالا که dotenv اجرا شده، connectDB درست MONGO_URI را می‌خواند
 connectDB();
 
 const app = express();
@@ -29,15 +26,24 @@ app.use(express.urlencoded({extended : true}))
 // Cookie parser middleware
 app.use(cookieParser())
 
+// ← اضافه کردن CORS قبل از روت‌ها
+app.use(cors({
+  origin: 'http://localhost:3000', // آدرس فرانت‌اند
+  credentials: true // اگر کوکی‌ها هم میخوای فرستاده بشن
+}));
+
 app.get('/',(req,res) => {
     res.send('API is running ...')
 });
+
+// روت‌ها
 app.use('/api/products',productsRoutes);
 app.use('/api/users',userRoutes);
 app.use('/api/orders',orderRoutes);
 app.use('/api/upload',uploadRoutes);
 app.use('/api/categories', categoryRoutes);
 
+// محیط پروکشن
 if (process.env.NODE_ENV === 'production') {
     const __dirname = path.resolve();
     app.use('/uploads', express.static('/var/data/uploads'));
@@ -58,4 +64,5 @@ app.use(notfound);
 app.use(errorHandler);
 
 app.listen(port,() => console.log(`Server is running On port ${port}`));
+
 

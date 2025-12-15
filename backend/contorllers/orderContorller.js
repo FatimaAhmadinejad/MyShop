@@ -85,21 +85,22 @@ const UpdateOrderToPaid = asyncHandler(async(req,res) => {
 // @desc    Update order to delivered
 //@route    PUT /api/orders/:id/delivered
 //@access   Private/Admin
-const UpdateOrderToDelivered = asyncHandler(async(req,res) => {
-    const order = await Order.findById(req.params.id);
+const UpdateOrderToDelivered = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
 
-    if(order){
-        order.isDelivered = true;
-        order.deliveredAt = new Date().getDay();
-
-        const updatedOrder = await order.save();
-
-        res.status(200).json(updatedOrder);
-    }else {
-        res.status(404);
-        throw new Error('Order not Found')
-    }
+  if (order) {
+    order.isDelivered = true;
+    order.deliveredAt = Date.now(); // تاریخ کامل فعلی
+    await order.save()
+    
+    const updatedOrder = await order.save();
+    res.status(200).json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error("Order not Found");
+  }
 });
+
 // @desc    Get all orders 
 //@route    GET /api/orders/:id/pay
 //@access   Private/Admin
