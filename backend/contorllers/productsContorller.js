@@ -202,11 +202,32 @@ const createProductReview = asyncHandler(async (req, res) => {
     throw new Error('Product not found');
   }
 });
+const getTopProducts = asyncHandler(async (req, res) => {
+  // همه محصولات را fetch کن
+  const products = await Product.find({});
 
-const getTopProducts = asyncHandler(async(req,res) => {
-  const products = await Product.find({}).sort({ Rating: -1 }).limit(3);
-  res.status(200).json(products)
+  // محاسبه rating واقعی
+  const productsWithRatings = products.map(product => {
+    const numReviews = product.reviews.length;
+    const rating = numReviews > 0
+      ? product.reviews.reduce((acc, r) => acc + r.rating, 0) / numReviews
+      : 0;
+    return {
+      ...product._doc,
+      rating,
+      numReviews
+    };
+  });
+
+  // مرتب سازی نزولی و گرفتن 3 محصول برتر
+  const topProducts = productsWithRatings
+    .sort((a, b) => b.rating - a.rating)
+    .slice(0, 3);
+
+  res.status(200).json(topProducts);
 });
+
+
 const getCategories = asyncHandler(async (req, res) => {
   const categories = await Product.distinct('category'); // همه دسته‌ها
   res.status(200).json( categories );
