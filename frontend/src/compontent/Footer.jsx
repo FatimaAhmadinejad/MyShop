@@ -5,12 +5,13 @@ const Footer = () => {
     return (
     <footer>
         <Container>
-            <Row>
-                <Col className='text-center py-3'>
-                <p>Proshop &copy; {currentYear}</p>
-                </Col>
+          <Row>
+             <Col className='text-center py-3'>
+              <p>MyShop &copy; {new Date().getFullYear()}</p>
+             </Col>
             </Row>
         </Container>
+
     </footer>
   )
 }
