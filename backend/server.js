@@ -9,7 +9,8 @@ import orderRoutes from './routes/orderRoutes.js'
 import uploadRoutes from './routes/UpdateRoutes.js'
 import categoryRoutes from './routes/categoryRoutes.js';
 import cookieParser from 'cookie-parser';
-import cors from 'cors';  // ← اضافه کن
+import recommenderRoutes from './routes/recommenderRoutes.js'
+import cors from 'cors';  
 
 dotenv.config();
 
@@ -29,8 +30,10 @@ app.use(cookieParser())
 // ← اضافه کردن CORS قبل از روت‌ها
 app.use(cors({
   origin: 'http://localhost:3000', // آدرس فرانت‌اند
-  credentials: true // اگر کوکی‌ها هم میخوای فرستاده بشن
+  credentials: true
 }));
+
+app.use('/api/recommend', recommenderRoutes);
 
 app.get('/',(req,res) => {
     res.send('API is running ...')

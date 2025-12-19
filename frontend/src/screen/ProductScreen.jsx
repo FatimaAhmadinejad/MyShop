@@ -24,7 +24,7 @@ const [recommended, setRecommended] = useState([]);
 useEffect(() => {
   const fetchRecommended = async () => {
     try {
-      const res = await fetch(`http://127.0.0.1:8000/recommend/${productId}`);
+      const res = await fetch(`https://recommender-gyqm.onrender.com/recommend/${productId}`);
       const data = await res.json();
       setRecommended(data.recommended || []);
     } catch (error) {
