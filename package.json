@@ -1,43 +1,48 @@
 {
-  "name": "proshop",
+  "name": "myshop",
   "version": "2.0.0",
-  "description": "mern ecommerne",
+  "description": "mern ecommerce",
+  "private": true,
   "type": "module",
   "main": "server.js",
+
+  "workspaces": [
+    "frontend"
+  ],
+
   "scripts": {
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\"\"",
+    "build": "npm run build --workspace frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder.js",
     "data:destroy": "node backend/seeder.js -d"
   },
-  "author": "Brad Traservy",
+
+  "author": "Fatima Ahmadinejad",
   "license": "MIT",
+
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.13.2",
     "bcryptjs": "^2.4.3",
-    "bskl": "^3.2.8",
     "colors": "^1.4.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "express": "^4.21.0",
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
-    "mangodb": "^1.0.0",
     "mongodb": "4.1",
     "mongoose": "^8.7.0",
-    "mongose": "^0.0.2-security",
-    "moongose": "^1.0.0",
     "multer": "^1.4.5-lts.1",
-    "params": "^0.1.1",
-    "react-redux": "^9.1.2",
     "sharp": "^0.34.5"
   },
+
   "devDependencies": {
     "concurrently": "^9.2.1",
     "dotenv": "^16.4.5",
     "nodemon": "^3.1.7"
   }
 }
+
