@@ -5,11 +5,9 @@
   "private": true,
   "type": "module",
   "main": "server.js",
-
   "workspaces": [
     "frontend"
   ],
-
   "scripts": {
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
@@ -19,10 +17,8 @@
     "data:import": "node backend/seeder.js",
     "data:destroy": "node backend/seeder.js -d"
   },
-
   "author": "Fatima Ahmadinejad",
   "license": "MIT",
-
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.13.2",
@@ -38,11 +34,9 @@
     "multer": "^1.4.5-lts.1",
     "sharp": "^0.34.5"
   },
-
   "devDependencies": {
     "concurrently": "^9.2.1",
     "dotenv": "^16.4.5",
     "nodemon": "^3.1.7"
   }
 }
-

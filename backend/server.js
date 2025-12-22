@@ -1,71 +1,76 @@
-import path from 'path'
+import path from 'path';
 import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
-import {notfound,errorHandler} from './middleware/errormiddleware.js'
-import productsRoutes from './routes/productRoutes.js'
-import userRoutes from './routes/usersRoutes.js'
-import orderRoutes from './routes/orderRoutes.js'
-import uploadRoutes from './routes/UpdateRoutes.js'
+import { notfound, errorHandler } from './middleware/errormiddleware.js';
+import productsRoutes from './routes/productRoutes.js';
+import userRoutes from './routes/usersRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
+import uploadRoutes from './routes/UpdateRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
+import recommenderRoutes from './routes/recommenderRoutes.js';
 import cookieParser from 'cookie-parser';
-import recommenderRoutes from './routes/recommenderRoutes.js'
-import cors from 'cors';  
+import cors from 'cors';
 
 dotenv.config();
-
-const port = process.env.PORT || 5000;
 
 connectDB();
 
 const app = express();
+const port = process.env.PORT || 5000;
 
-// Body parser middleware
+// Body parser
 app.use(express.json());
-app.use(express.urlencoded({extended : true}))
+app.use(express.urlencoded({ extended: true }));
 
-// Cookie parser middleware
-app.use(cookieParser())
+// Cookie parser
+app.use(cookieParser());
 
-// ← اضافه کردن CORS قبل از روت‌ها
+// تنظیم CORS
+const allowedOrigins = [
+  'https://myshop-76pn.onrender.com', // فرانت روی Render
+  'http://localhost:3000' // توسعه محلی
+];
+
 app.use(cors({
-  origin: 'http://localhost:3000', // آدرس فرانت‌اند
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
+// روت‌های API
+app.use('/api/products', productsRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/upload', uploadRoutes);
+app.use('/api/categories', categoryRoutes);
 app.use('/api/recommend', recommenderRoutes);
 
-app.get('/',(req,res) => {
-    res.send('API is running ...')
-});
+// مسیر آپلود فایل‌ها
+const __dirname = path.resolve();
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-// روت‌ها
-app.use('/api/products',productsRoutes);
-app.use('/api/users',userRoutes);
-app.use('/api/orders',orderRoutes);
-app.use('/api/upload',uploadRoutes);
-app.use('/api/categories', categoryRoutes);
-
-// محیط پروکشن
+// محیط پروکشن: serve فرانت از build
 if (process.env.NODE_ENV === 'production') {
-    const __dirname = path.resolve();
-    app.use('/uploads', express.static('/var/data/uploads'));
-    app.use(express.static(path.join(__dirname, '/frontend/build')));
-  
-    app.get('*', (req, res) =>
-      res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
-    );
+  app.use(express.static(path.join(__dirname, '/frontend/build')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  );
 } else {
-    const __dirname = path.resolve();
-    app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
-    app.get('/', (req, res) => {
-      res.send('API is running....');
-    });
+  app.get('/', (req, res) => {
+    res.send('API is running...');
+  });
 }
 
+// Middleware مدیریت خطا
 app.use(notfound);
 app.use(errorHandler);
 
-app.listen(port,() => console.log(`Server is running On port ${port}`));
-
-
+// شروع سرور
+app.listen(port, () => console.log(`Server running on port ${port}`));
