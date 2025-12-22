@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavDropdown, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 
 const Filter = () => {
   const navigate = useNavigate();
@@ -19,12 +19,12 @@ const Filter = () => {
   // گرفتن کتگوری‌ها و برندها
   useEffect(() => {
     const fetchCategories = async () => {
-      const { data } = await axios.get('/api/products/categories');
+     const { data } = await axiosInstance.get('/api/products/categories');
       setCategories(data);
     };
   
     const fetchBrands = async () => {
-      const { data } = await axios.get('/api/products/brands'); // اگر endpoint برند داری
+      const { data } = await axiosInstance.get('/api/products/brands'); // اگر endpoint برند داری
       setBrands(data);
     };
 
