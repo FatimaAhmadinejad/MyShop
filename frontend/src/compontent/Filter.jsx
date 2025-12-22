@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavDropdown, Form, Button, FormGroup } from 'react-bootstrap';
+import { NavDropdown, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -49,33 +49,32 @@ const Filter = () => {
     <NavDropdown title="Filter" id="filter-dropdown">
       <div className="px-3 py-2" style={{ minWidth: '200px' }}>
         {/* Category */}
-<Form.Group className="mb-2">
-  <Form.Label>Category</Form.Label>
-  <Form.Select
-    value={selectedCategory}
-    onChange={e => setSelectedCategory(e.target.value)}
-  >
-     <option value="">All Categories</option>
-  {categories && categories.map((cat, index) => (
-    <option key={index} value={cat}>{cat}</option>
-  ))}
-</Form.Select>
-</Form.Group>
+        <Form.Group className="mb-2">
+          <Form.Label>Category</Form.Label>
+          <Form.Select
+            value={selectedCategory}
+            onChange={e => setSelectedCategory(e.target.value)}
+          >
+            <option value="">All Categories</option>
+            {categories && categories.map((cat, index) => (
+              <option key={index} value={cat}>{cat}</option>
+            ))}
+          </Form.Select>
+        </Form.Group>
 
-{/* Brand */}
-<Form.Group className="mb-2">
-  <Form.Label>Brand</Form.Label>
-  <Form.Select
-    value={selectedBrand}
-    onChange={e => setSelectedBrand(e.target.value)}
-  >
-    <option value="">All Brands</option>
-    {brands && brands.map((brand, index) => (
-      <option key={index} value={brand}>{brand}</option>
-    ))}
-  </Form.Select>
-</Form.Group>
-
+        {/* Brand */}
+        <Form.Group className="mb-2">
+          <Form.Label>Brand</Form.Label>
+          <Form.Select
+            value={selectedBrand}
+            onChange={e => setSelectedBrand(e.target.value)}
+          >
+            <option value="">All Brands</option>
+            {brands && brands.map((brand, index) => (
+              <option key={index} value={brand}>{brand}</option>
+            ))}
+          </Form.Select>
+        </Form.Group>
 
         {/* Price */}
         <Form.Group className="mb-2">
@@ -115,4 +114,6 @@ const Filter = () => {
 };
 
 export default Filter;
+
+
 

@@ -1,26 +1,28 @@
-import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button } from 'react-bootstrap';
-import { FaTimes, FaTrash, FaCheck } from 'react-icons/fa';
-import Message from '../../compontent/Message.jsx';
-import Loader from '../../compontent/Loader.jsx';
-import { useGetUsersQuery, useDeleteUserMutation } from '../../slices/userApiSlice.js';
-import { toast } from 'react-toastify';
+import { Table, Button } from 'react-bootstrap'
+import { FaTimes, FaTrash, FaCheck } from 'react-icons/fa'
+import Message from '../../compontent/Message.jsx'
+import Loader from '../../compontent/Loader.jsx'
+import {
+  useGetUsersQuery,
+  useDeleteUserMutation,
+} from '../../slices/userApiSlice.js'
+import { toast } from 'react-toastify'
 
 const UserListScreen = () => {
-  const { data: users, refetch, isLoading, error } = useGetUsersQuery();
-  const [deleteUser] = useDeleteUserMutation();
+  const { data: users, refetch, isLoading, error } = useGetUsersQuery()
+  const [deleteUser] = useDeleteUserMutation()
 
   const deleteHandler = async (id) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        await deleteUser(id).unwrap(); // unwrap() برای گرفتن خطاها به صورت try/catch
-        refetch();
-        toast.success('User deleted successfully');
+        await deleteUser(id).unwrap()
+        refetch()
+        toast.success('User deleted successfully')
       } catch (err) {
-        toast.error(err?.data?.message || err?.error || 'Something went wrong');
+        toast.error(err?.data?.message || err?.error || 'Something went wrong')
       }
     }
-  };
+  }
 
   return (
     <>
@@ -72,7 +74,8 @@ const UserListScreen = () => {
         </Table>
       )}
     </>
-  );
-};
+  )
+}
 
-export default UserListScreen;
+export default UserListScreen
+

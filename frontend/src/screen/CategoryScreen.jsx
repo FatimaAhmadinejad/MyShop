@@ -7,7 +7,7 @@ import Paginate from '../compontent/Paginate';
 
 const CategoryScreen = () => {
   const { categoryName } = useParams();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
 
   const { data, isLoading, isError, refetch } = useGetProductsQuery({
@@ -50,5 +50,7 @@ const CategoryScreen = () => {
 };
 
 export default CategoryScreen;
+
+
 
 
