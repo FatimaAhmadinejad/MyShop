@@ -14,6 +14,11 @@ import cors from 'cors';
 
 dotenv.config();
 
+console.log('--- SERVER STARTING ---');
+console.log('PORT:', process.env.PORT);
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('JWT_SECRET at startup:', process.env.TEST); // ← این مهمه
+
 connectDB();
 
 const app = express();
@@ -28,8 +33,8 @@ app.use(cookieParser());
 
 // تنظیم CORS
 const allowedOrigins = [
-  'https://myshop-76pn.onrender.com', // فرانت روی Render
-  'http://localhost:3000' // توسعه محلی
+  'https://myshop-76pn.onrender.com',
+  'http://localhost:3000'
 ];
 
 app.use(cors({
@@ -37,11 +42,20 @@ app.use(cors({
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
+      console.error('Blocked by CORS:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true
 }));
+
+// Middleware برای لاگ درخواست‌ها
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.url}`);
+  console.log('Request headers:', req.headers);
+  console.log('Request cookies:', req.cookies);
+  next();
+});
 
 // روت‌های API
 app.use('/api/products', productsRoutes);
@@ -55,24 +69,10 @@ app.use('/api/recommend', recommenderRoutes);
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-// محیط پروکشن: serve فرانت از build
-// if (process.env.NODE_ENV === 'production') {
-//   app.use(express.static(path.join(__dirname, '../frontend/build')));
-
-//   app.get('*', (req, res) =>
-//     res.sendFile(path.resolve(__dirname, '../frontend/build', 'index.html'))
-//   );
-// } else {
-//   app.get('/', (req, res) => {
-//     res.send('API is running...');
-//   });
-// }
-
-//  فقط یک مسیر ساده برای تست
+// مسیر تست ساده
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
-
 
 // Middleware مدیریت خطا
 app.use(notfound);
