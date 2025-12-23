@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 // ست کردن JWT به صورت HTTP-only cookie
 const generateToken = (res, userId) => {
-  const token = jwt.sign({ id: userId }, process.env.TEST, {
+  const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, {
     expiresIn: '30d',
   });
 
@@ -16,7 +16,7 @@ const generateToken = (res, userId) => {
 
 // تولید JWT به صورت string بدون ست کردن cookie (برای فرانت‌اند)
 const generateTokenString = (userId) => {
-  return jwt.sign({ id: userId }, process.env.TEST, {
+  return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
     expiresIn: '30d',
   });
 };

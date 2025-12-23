@@ -17,7 +17,7 @@ dotenv.config();
 console.log('--- SERVER STARTING ---');
 console.log('PORT:', process.env.PORT);
 console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('JWT_SECRET at startup:', process.env.TEST); // ← این مهمه
+console.log('JWT_SECRET at startup:', process.env.JWT_SECRET); // ← این مهمه
 
 connectDB();
 
