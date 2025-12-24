@@ -56,7 +56,7 @@ const getProducts = asyncHandler(async(req,res) => {
 
 
     const products = await Product.find(filter)
-    .sort(sortOption)
+    .sort({ ...sortOption, createdAt: -1, _id: -1 })
     .limit(pageSize)
     .skip(pageSize * (page - 1))
     ;
