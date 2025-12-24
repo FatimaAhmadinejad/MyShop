@@ -1,5 +1,7 @@
 import asyncHandler from '../middleware/asynchandler.js';
 import Product from '../model/productModel.js';
+import axios from 'axios'; // اضافه شد برای فراخوانی ریکامندر
+
 // @desc    Fetch all products
 //@route    GET /api/products
 //@access   Public
@@ -76,6 +78,7 @@ const getProducts = asyncHandler(async(req,res) => {
 
 res.json({ products: productsWithRatings, page, pages: Math.ceil(count / pageSize) });
 });
+
 // @desc    Fetch all products
 //@route    GET /api/products:id
 //@access   Public
@@ -118,6 +121,13 @@ const createProduct = asyncHandler(async (req, res) => {
 
   const createdProduct = await product.save();
   res.status(201).json(createdProduct);
+
+  // --- اضافه کردن فراخوانی ریکامندر برای ساخت بردار محصول جدید ---
+  try {
+    await axios.post(`https://recommender-gyqm.onrender.com/update_embeddings/${createdProduct._id}`);
+  } catch (error) {
+    console.error("Error updating embeddings:", error.message);
+  }
 });
 
 // @desc    Update A Product
@@ -139,25 +149,46 @@ const UpdateProduct = asyncHandler(async(req,res) => {
 
     const UpdatedProduct = await product.save();
     res.json(UpdatedProduct);
+
+    // --- اضافه کردن فراخوانی ریکامندر برای بروزرسانی بردار محصول ---
+    try {
+      await axios.post(`https://recommender-gyqm.onrender.com/update_embeddings/${UpdatedProduct._id}`);
+    } catch (error) {
+      console.error("Error updating embeddings:", error.message);
+    }
+
   }else {
     res.status(404);
     throw new Error('Resource not found');
   }
 });
+
 // @desc    Delete A Product
-//@route    DELETE /api/products/:id
-//@access   Private/Admin
+// @route   DELETE /api/products/:id
+// @access  Private/Admin
+
 const DeleteProduct = asyncHandler(async(req,res) => {
   const product = await Product.findById(req.params.id);
 
   if(product){
+    // حذف محصول از دیتابیس
     await Product.deleteOne({ _id: product._id });
+
+    try {
+      // حذف بردار محصول از ریکامندر
+      await axios.delete(`https://recommender-gyqm.onrender.com/delete_embedding/${product._id}`);
+    } catch (error) {
+      console.error("Failed to delete embedding:", error.message);
+      // اگر شکست خورد، می‌توان ادامه داد یا پیام خطا داد
+    }
+
     res.status(200).json({ message: 'Product deleted' });
   }else {
     res.status(404);
     throw new Error('Resource not found');
   }
 });
+
 // @desc    Create a new review
 //@route    DELETE /api/products/:id/reviews
 //@access   Private
@@ -165,7 +196,6 @@ const createProductReview = asyncHandler(async (req, res) => {
   const { rating, comment } = req.body;
 
   const product = await Product.findById(req.params.id);
-
 
   if (product) {
     const alreadyReviewed = product.reviews.find(
@@ -203,6 +233,7 @@ const createProductReview = asyncHandler(async (req, res) => {
     throw new Error('Product not found');
   }
 });
+
 const getTopProducts = asyncHandler(async (req, res) => {
   // همه محصولات را fetch کن
   const products = await Product.find({});
@@ -228,15 +259,24 @@ const getTopProducts = asyncHandler(async (req, res) => {
   res.status(200).json(topProducts);
 });
 
-
 const getCategories = asyncHandler(async (req, res) => {
   const categories = await Product.distinct('category'); // همه دسته‌ها
   res.status(200).json( categories );
 });
 
-
 const getBrands = async (req, res) => {
   const brands = await Product.find().distinct('brand'); // یا populate و map
    res.status(200).json(brands);
 };
-export {getProducts,getProductsById,createProduct,UpdateProduct,DeleteProduct,createProductReview,getTopProducts,getCategories,getBrands};   
+
+export {
+  getProducts,
+  getProductsById,
+  createProduct,
+  UpdateProduct,
+  DeleteProduct,
+  createProductReview,
+  getTopProducts,
+  getCategories,
+  getBrands
+};   
