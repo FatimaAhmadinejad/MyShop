@@ -66,8 +66,9 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/recommend', recommenderRoutes);
 
 // مسیر آپلود فایل‌ها
-const __dirname = path.resolve();
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+const __dirname = path.resolve()
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 // مسیر تست ساده
 app.get('/', (req, res) => {
