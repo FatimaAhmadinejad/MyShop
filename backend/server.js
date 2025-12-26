@@ -6,7 +6,7 @@ import { notfound, errorHandler } from './middleware/errormiddleware.js';
 import productsRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/usersRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
-import uploadRoutes from './routes/UpdateRoutes.js';
+import uploadRoutes from './routes/UploadRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import recommenderRoutes from './routes/recommenderRoutes.js';
 import cookieParser from 'cookie-parser';
