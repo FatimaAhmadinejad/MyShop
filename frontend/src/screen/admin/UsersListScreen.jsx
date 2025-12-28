@@ -2,15 +2,27 @@ import { Table, Button } from 'react-bootstrap'
 import { FaTimes, FaTrash, FaCheck } from 'react-icons/fa'
 import Message from '../../compontent/Message.jsx'
 import Loader from '../../compontent/Loader.jsx'
-import {
-  useGetUsersQuery,
-  useDeleteUserMutation,
-} from '../../slices/userApiSlice.js'
+import { useSelector } from 'react-redux'
+import { useGetUsersQuery, useDeleteUserMutation } from '../../slices/userApiSlice.js'
 import { toast } from 'react-toastify'
 
 const UserListScreen = () => {
-  const { data: users, refetch, isLoading, error } = useGetUsersQuery()
+  const { userInfo } = useSelector((state) => state.auth)
+
+  // اگر userInfo یا admin نیست، query اجرا نشود
+  const skipQuery = !userInfo?.token || !userInfo?.isAdmin
+
+  const { data: users = [], refetch, isLoading, error } = useGetUsersQuery(
+    userInfo?.token,
+    { skip: skipQuery }
+  )
+
   const [deleteUser] = useDeleteUserMutation()
+
+  // اگر user login نیست یا admin نیست پیام بده
+  if (!userInfo || !userInfo.isAdmin) {
+    return <Message variant="danger">You must be an admin to view this page</Message>
+  }
 
   const deleteHandler = async (id) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
@@ -78,4 +90,7 @@ const UserListScreen = () => {
 }
 
 export default UserListScreen
+
+
+
 

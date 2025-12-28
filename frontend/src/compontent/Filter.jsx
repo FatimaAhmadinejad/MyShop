@@ -19,12 +19,12 @@ const Filter = () => {
   // گرفتن کتگوری‌ها و برندها
   useEffect(() => {
     const fetchCategories = async () => {
-     const { data } = await axiosInstance.get('/api/products/categories');
+     const { data } = await axiosInstance.get('/products/categories');
       setCategories(data);
     };
   
     const fetchBrands = async () => {
-      const { data } = await axiosInstance.get('/api/products/brands'); // اگر endpoint برند داری
+      const { data } = await axiosInstance.get('/products/brands'); // اگر endpoint برند داری
       setBrands(data);
     };
 

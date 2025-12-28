@@ -17,17 +17,20 @@ const ProfileScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const dispatch = useDispatch();
-
   const { userInfo } = useSelector((state) => state.auth);
 
+  // Hooks باید همیشه صدا زده شوند
   const [updateProfile, { isLoading: loadingUpdateProfile }] =
     useProfileMutation();
 
+  // ❌ token حذف شد – از prepareHeaders استفاده می‌شود
   const {
     data: orders = [],
     isLoading,
     error,
-  } = useGetMyOrderQuery();
+  } = useGetMyOrderQuery(undefined, {
+    skip: !userInfo,
+  });
 
   useEffect(() => {
     if (userInfo) {
@@ -46,18 +49,27 @@ const ProfileScreen = () => {
 
     try {
       const res = await updateProfile({
-        _id: userInfo._id,
         name,
         email,
         password,
       }).unwrap();
 
-      dispatch(setCredentials(res));
+      // حفظ token قبلی
+      dispatch(setCredentials({ ...res, token: userInfo.token }));
       toast.success("Profile updated successfully");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
   };
+
+  // نمایش پیام اگر کاربر login نکرده
+  if (!userInfo) {
+    return (
+      <Message variant="danger">
+        You must be logged in to view this page
+      </Message>
+    );
+  }
 
   return (
     <Row>
@@ -122,7 +134,7 @@ const ProfileScreen = () => {
           <Loader />
         ) : error ? (
           <Message variant="danger">
-            {error?.data?.message || error.error}
+            {error?.data?.message || error.error || "Something went wrong"}
           </Message>
         ) : (
           <Table striped hover responsive className="table-sm">
@@ -140,11 +152,8 @@ const ProfileScreen = () => {
               {orders.map((order) => (
                 <tr key={order._id}>
                   <td>{order._id}</td>
-
                   <td>{order.createdAt?.substring(0, 10)}</td>
-
                   <td>${order.totalPrice}</td>
-
                   <td>
                     {order.isPaid && order.paidAt ? (
                       order.paidAt.substring(0, 10)
@@ -152,7 +161,6 @@ const ProfileScreen = () => {
                       <FaTimes style={{ color: "red" }} />
                     )}
                   </td>
-
                   <td>
                     {order.isDelivered && order.deliveredAt ? (
                       order.deliveredAt.substring(0, 10)
@@ -160,7 +168,6 @@ const ProfileScreen = () => {
                       <FaTimes style={{ color: "red" }} />
                     )}
                   </td>
-
                   <td>
                     <LinkContainer to={`/order/${order._id}`}>
                       <Button className="btn-sm" variant="light">
@@ -179,3 +186,6 @@ const ProfileScreen = () => {
 };
 
 export default ProfileScreen;
+
+
+

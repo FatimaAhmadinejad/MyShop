@@ -3,14 +3,23 @@ import { Table, Button } from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
 import Message from '../../compontent/Message.jsx';
 import Loader from '../../compontent/Loader.jsx';
+import { useSelector } from 'react-redux';
 import { useGetOrdersQuery } from '../../slices/orderApiSlice.js';
 
 const OrderListScreen = () => {
-  const {
-    data: orders = [],
-    isLoading,
-    error,
-  } = useGetOrdersQuery();
+  const { userInfo } = useSelector((state) => state.auth);
+
+  // اگر userInfo یا admin نیست، query اجرا نشود
+  const skipQuery = !userInfo?.token || !userInfo?.isAdmin;
+
+  const { data: orders = [], isLoading, error } = useGetOrdersQuery(
+    { token: userInfo?.token },
+    { skip: skipQuery }
+  );
+
+  if (!userInfo || !userInfo.isAdmin) {
+    return <Message variant="danger">You must be an admin to view this page</Message>;
+  }
 
   return (
     <>
@@ -20,7 +29,7 @@ const OrderListScreen = () => {
         <Loader />
       ) : error ? (
         <Message variant="danger">
-          {error?.data?.message || error.error}
+          {error?.data?.message || error.error || 'Something went wrong'}
         </Message>
       ) : (
         <Table striped bordered hover responsive className="table-sm">
@@ -80,3 +89,4 @@ const OrderListScreen = () => {
 };
 
 export default OrderListScreen;
+
