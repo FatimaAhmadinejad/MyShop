@@ -9,45 +9,47 @@ const getProducts = asyncHandler(async (req, res) => {
   const pageSize = 8
   const page = Number(req.query.pageNumber) || 1
 
+  // فیلتر بر اساس keyword
   const keyword = req.query.keyword
     ? { name: { $regex: req.query.keyword, $options: 'i' } }
     : {}
 
   const filter = { ...keyword }
 
+  // فیلتر category و brand
   if (req.query.category) filter.category = req.query.category
   if (req.query.brand) filter.brand = req.query.brand
 
+  // فیلتر محدوده قیمت
   if (req.query.minPrice || req.query.maxPrice) {
     filter.price = {}
     if (req.query.minPrice) filter.price.$gte = Number(req.query.minPrice)
     if (req.query.maxPrice) filter.price.$lte = Number(req.query.maxPrice)
   }
 
-  /* ======================
-     SORT LOGIC ✅
-  ====================== */
-  let sortOption = { createdAt: -1 }
+  // تنظیم sort بر اساس query
+  let sortOption = { createdAt: -1 } // default: جدیدترین‌ها
 
   switch (req.query.sort) {
     case 'price_asc':
       sortOption = { price: 1 }
       break
-
     case 'price_desc':
       sortOption = { price: -1 }
       break
-
-    case 'rating':
+    case 'rating_asc':
+      sortOption = { rating: 1, numReviews: 1 }
+      break
+    case 'rating_desc':
       sortOption = { rating: -1, numReviews: -1 }
       break
-
     default:
       sortOption = { createdAt: -1 }
   }
 
   const count = await Product.countDocuments(filter)
 
+  // دریافت محصولات با filter، sort و pagination
   const products = await Product.find(filter)
     .sort(sortOption)
     .limit(pageSize)
