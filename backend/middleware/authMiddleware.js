@@ -3,11 +3,7 @@ import asyncHandler from './asynchandler.js';
 import User from '../model/userModel.js';
 
 const protect = asyncHandler(async (req, res, next) => {
-  console.log('--- /api/users/auth route hit ---'); // log ورود به route
-  console.log('Request headers:', req.headers);
-  console.log('Request cookies:', req.cookies);
-  console.log('Request body:', req.body);
-  console.log('JWT_SECRET:', process.env.TEST);
+ console.log('--- /api/users/auth route hit ---');
 
   let token;
 

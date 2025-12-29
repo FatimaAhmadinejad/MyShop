@@ -40,12 +40,12 @@ const PlaceOrderScreen = () => {
         totalPrice: cart.totalPrice,
       };
 
-      console.log("Sending order payload:", orderPayload);
+      
 
       // ارسال مستقیم payload
       const res = await createOrder(orderPayload).unwrap();
 
-      console.log("createOrder response:", res);
+      
 
       if (res && res._id) {
         dispatch(clearCartItems());

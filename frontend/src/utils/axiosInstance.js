@@ -24,8 +24,6 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-console.log('REACT_APP_API_URL=', process.env.REACT_APP_API_URL);
-console.log('REACT_APP_TEST=', process.env.REACT_APP_TEST);
 
 export default axiosInstance;
 
