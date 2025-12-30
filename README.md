@@ -40,17 +40,18 @@ Designed as a **portfolio-ready, production-aware project** with a focus on clea
 
 🧠 System Architecture
 flowchart LR
-  Client[React Client]
-  API[Node.js / Express API]
-  DB[(MongoDB Atlas)]
-  ML[FastAPI ML Service]
-  FAISS[FAISS Vector Index]
+    A[Client<br/>React] --> B[Node.js / Express API]
 
-  Client --> API
-  API --> DB
-  API --> ML
-  ML --> DB
-  ML --> FAISS
+    B --> C[(MongoDB Atlas)]
+
+    B --> D[FastAPI ML Service]
+    D --> C
+    D --> E[FAISS Vector Index]
+
+    subgraph ML Service
+      D
+      E
+    end
 
 Architecture Notes
 
