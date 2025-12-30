@@ -100,29 +100,26 @@ Cloudinary (image storage)
 ### 🚀 Getting Started (Local Development)
 ### Backend
 
-Install dependencies
+cd backend
+npm install
+npm run dev
 
-Configure environment variables
-
-Start the development server
 
 ### Frontend
 
-Install dependencies
+cd frontend
+npm install
+npm start
 
-Connect to the backend API
-
-Run the React development server
 
 ### ML Service (Optional)
 
-Clone the recommender repository
+git clone https://github.com/FatimaAhmadinejad/Recommender
+cd Recommender
+pip install -r requirements.txt
+python build_embeddings.py
+uvicorn api:app --reload
 
-Install Python dependencies
-
-Build embeddings
-
-Start the FastAPI server
 
 "The main application works independently of a local ML service. Recommendations are served from the deployed ML service on Render."
 ---
