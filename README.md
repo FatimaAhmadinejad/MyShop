@@ -43,12 +43,16 @@ Designed as a **portfolio-ready, production-aware project** focusing on clean ar
 ## 🧠 System Architecture
 
 Client (React)
-↓
-Node.js / Express (API)
-↓ ↘
-MongoDB FastAPI (ML Service)
-↓
-Hybrid Recommender (FAISS)
+      ↓
+Node.js / Express API
+      ↓──────────────→ MongoDB
+      ↓
+FastAPI (ML Service)
+      ↓
+MongoDB
+      ↓
+FAISS (Static Index)
+
 
 * ML service is **decoupled from the main backend** (separate repo)
 * Communication via HTTP (Axios)
