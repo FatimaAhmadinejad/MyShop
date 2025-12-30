@@ -99,27 +99,28 @@ Cloudinary (image storage)
 ---
 ### 🚀 Getting Started (Local Development)
 ### Backend
+```bash
 
 cd backend
 npm install
 npm run dev
-
+```
 
 ### Frontend
-
+```bash
 cd frontend
 npm install
 npm start
-
+```
 
 ### ML Service (Optional)
-
+```bash
 git clone https://github.com/FatimaAhmadinejad/Recommender
 cd Recommender
 pip install -r requirements.txt
 python build_embeddings.py
 uvicorn api:app --reload
-
+```
 
 
 "The main application works independently of a local ML service. Recommendations are served from the deployed ML service on Render."
