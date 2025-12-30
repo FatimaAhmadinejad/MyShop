@@ -40,31 +40,9 @@ Designed as a **portfolio-ready, production-aware project** with a focus on clea
 
 ### 🧠 System Architecture
 
-The system follows a decoupled, service-oriented architecture designed for scalability and clear separation of concerns.
+![Architecture](screenshots/architecture.png)
 
-Client (React)
-Handles UI rendering, state management, and user interactions.
-
-Backend API (Node.js / Express)
-Manages authentication, business logic, product management, orders, payments, and acts as the gateway between the client and other services.
-
-Database (MongoDB Atlas)
-Stores users, products, orders, reviews, and metadata.
-Both the backend API and the ML service connect to MongoDB independently.
-
-ML Recommendation Service (FastAPI)
-A standalone microservice responsible for generating product recommendations using hybrid similarity methods.
-
-Vector Search Engine (FAISS)
-Used inside the ML service for efficient similarity search over product embeddings.
-
-Key architectural notes:
-
-Backend and ML service are fully decoupled
-
-Communication between services happens via HTTP
-
-The recommender currently uses a static index, but the architecture supports dynamic updates on product lifecycle events (create/update/delete)
+###  ⚠️The recommender currently uses a static index, but the architecture supports dynamic updates on product lifecycle events (create/update/delete)
 
 ---
 ### 🛠️ Tech Stack
