@@ -121,17 +121,24 @@ myshop/
 git clone https://github.com/FatimaAhmadinejad/MyShop
 cd MyShop
 
-2️⃣ Backend Setup
+2️⃣ Frontend Setup
+cd frontend
+npm install
+npm start
+
+3️⃣ Backend Setup
 cd backend
 npm install
 npm run dev
 
-3️⃣ ML Service Setup (Separate Repo)
+
+4️⃣ ML Service Setup (Separate Repo)
 git clone https://github.com/FatimaAhmadinejad/Recommender
 cd Recommender
 pip install -r requirements.txt
 python build_embeddings.py
 uvicorn api:app --reload
+
 
 🔮 Future Improvements
 
