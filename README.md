@@ -53,6 +53,7 @@ flowchart LR
   API --> ML
   ML --> DB
   ML --> FAISS
+---
 Architecture Notes
 
 Backend and ML service are fully decoupled
@@ -103,35 +104,36 @@ MongoDB Atlas
 Cloudinary (image storage)
 
 📦 Repository Structure
-txt
-Copy code
+
+```mermaid
+
 myshop/
 ├── backend/        # Node.js / Express API
 ├── frontend/       # React client
 ├── recommender/    # ML microservice (separate repository)
 └── README.md
 ⚠️ The recommender service is maintained in a separate repository.
-
+---
 🚀 Getting Started (Local)
 1️⃣ Clone Repository
-bash
-Copy code
+```mermaid
 git clone https://github.com/FatimaAhmadinejad/MyShop
 cd MyShop
+---
 2️⃣ Backend Setup
-bash
-Copy code
+```mermaid
 cd backend
 npm install
 npm run dev
+---
 3️⃣ ML Service Setup (Separate Repo)
-bash
-Copy code
+```mermaid
 git clone https://github.com/FatimaAhmadinejad/Recommender
 cd Recommender
 pip install -r requirements.txt
 python build_embeddings.py
 uvicorn api:app --reload
+---
 🔮 Future Improvements
 Fully dynamic embedding updates (event-driven)
 
