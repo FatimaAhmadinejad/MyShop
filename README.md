@@ -91,17 +91,10 @@ Cloudinary (image storage)
 ---
 ### 📦 Repository Structure
 
-The project is organized with clear separation between concerns:
+![Repository Structure](screenshots/structure.png)
 
-backend/ – Node.js / Express API, database models, authentication, and business logic
 
-frontend/ – React client application
-
-recommender/ – ML microservice (FastAPI, maintained in a separate repository)
-
-README.md – Project documentation
-
-⚠️ The recommender service is maintained in a separate repository and can be deployed independently.
+### ⚠️ The recommender service is maintained in a separate repository and can be deployed independently.
 
 ---
 ### 🚀 Getting Started (Local Development)
@@ -131,9 +124,7 @@ Build embeddings
 
 Start the FastAPI server
 
-The main application works without the ML service running locally.
-Recommendations will fall back to default behavior if the service is unavailable.
-
+"The main application works independently of a local ML service. Recommendations are served from the deployed ML service on Render."
 ---
 ### 🔮 Future Improvements
 
