@@ -151,6 +151,10 @@ Scalable backend and microservice design
 Production-aware deployment considerations
 
 ---
+📄 **Full Project Documentation (DOCX)**: [Download](./Document.docx)
+
+---
+
 ### 👩‍💻 Author
 
 Fatima Ahmadinejad
