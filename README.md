@@ -38,9 +38,7 @@ Designed as a **portfolio-ready, production-aware project** with a focus on clea
 
 ---
 
-## 🧠 System Architecture
-
-```mermaid
+🧠 System Architecture
 flowchart LR
   Client[React Client]
   API[Node.js / Express API]
@@ -53,7 +51,7 @@ flowchart LR
   API --> ML
   ML --> DB
   ML --> FAISS
----
+
 Architecture Notes
 
 Backend and ML service are fully decoupled
@@ -66,6 +64,7 @@ Current recommender uses a static index, but supports dynamic updates on product
 
 🛠️ Tech Stack
 Frontend
+
 React
 
 Redux Toolkit
@@ -75,6 +74,7 @@ Axios
 React Bootstrap
 
 Backend
+
 Node.js
 
 Express.js
@@ -86,6 +86,7 @@ JWT + Refresh Token Authentication
 PayPal Sandbox
 
 Machine Learning Service
+
 FastAPI
 
 NumPy
@@ -97,6 +98,7 @@ Sentence Transformers
 Torch / Torchvision
 
 Deployment
+
 Render (Free Tier)
 
 MongoDB Atlas
@@ -104,37 +106,34 @@ MongoDB Atlas
 Cloudinary (image storage)
 
 📦 Repository Structure
-
-```mermaid
-
 myshop/
 ├── backend/        # Node.js / Express API
 ├── frontend/       # React client
 ├── recommender/    # ML microservice (separate repository)
 └── README.md
+
+
 ⚠️ The recommender service is maintained in a separate repository.
----
+
 🚀 Getting Started (Local)
 1️⃣ Clone Repository
-```mermaid
 git clone https://github.com/FatimaAhmadinejad/MyShop
 cd MyShop
----
+
 2️⃣ Backend Setup
-```mermaid
 cd backend
 npm install
 npm run dev
----
+
 3️⃣ ML Service Setup (Separate Repo)
-```mermaid
 git clone https://github.com/FatimaAhmadinejad/Recommender
 cd Recommender
 pip install -r requirements.txt
 python build_embeddings.py
 uvicorn api:app --reload
----
+
 🔮 Future Improvements
+
 Fully dynamic embedding updates (event-driven)
 
 Real-time recommendations for new products
@@ -146,6 +145,7 @@ Model optimization and inference latency reduction
 Notification system (Email / SMS)
 
 🎯 Project Motivation
+
 This project was built to demonstrate:
 
 Real-world system architecture
@@ -155,6 +155,7 @@ Scalable full-stack application design
 Practical integration of machine learning into production systems
 
 👩‍💻 Author
+
 Fatemeh Ahmadinejad
 Computer Engineering – Software Engineering
 
