@@ -38,7 +38,7 @@ Designed as a **portfolio-ready, production-aware project** with a focus on clea
 
 ---
 
-🧠 System Architecture
+### 🧠 System Architecture
 
 The system follows a decoupled, service-oriented architecture designed for scalability and clear separation of concerns.
 
@@ -66,8 +66,9 @@ Communication between services happens via HTTP
 
 The recommender currently uses a static index, but the architecture supports dynamic updates on product lifecycle events (create/update/delete)
 
-🛠️ Tech Stack
-Frontend
+---
+### 🛠️ Tech Stack
+### Frontend
 
 React
 
@@ -77,7 +78,7 @@ Axios
 
 React Bootstrap
 
-Backend
+### Backend
 
 Node.js
 
@@ -89,7 +90,7 @@ JWT + Refresh Token authentication
 
 PayPal Sandbox integration
 
-Machine Learning Service
+### Machine Learning Service
 
 FastAPI
 
@@ -101,7 +102,7 @@ Sentence Transformers (text embeddings)
 
 Torch / Torchvision (image embeddings)
 
-Deployment & Infrastructure
+### Deployment & Infrastructure
 
 Render (Free Tier)
 
@@ -109,7 +110,8 @@ MongoDB Atlas
 
 Cloudinary (image storage)
 
-📦 Repository Structure
+---
+### 📦 Repository Structure
 
 The project is organized with clear separation between concerns:
 
@@ -123,8 +125,9 @@ README.md – Project documentation
 
 ⚠️ The recommender service is maintained in a separate repository and can be deployed independently.
 
-🚀 Getting Started (Local Development)
-Backend
+---
+### 🚀 Getting Started (Local Development)
+### Backend
 
 Install dependencies
 
@@ -132,7 +135,7 @@ Configure environment variables
 
 Start the development server
 
-Frontend
+### Frontend
 
 Install dependencies
 
@@ -140,7 +143,7 @@ Connect to the backend API
 
 Run the React development server
 
-ML Service (Optional)
+### ML Service (Optional)
 
 Clone the recommender repository
 
@@ -153,7 +156,8 @@ Start the FastAPI server
 The main application works without the ML service running locally.
 Recommendations will fall back to default behavior if the service is unavailable.
 
-🔮 Future Improvements
+---
+### 🔮 Future Improvements
 
 Fully dynamic embedding updates using event-driven pipelines
 
@@ -165,7 +169,8 @@ Model optimization and reduced inference latency
 
 User notification system (Email / SMS)
 
-🎯 Project Motivation
+---
+### 🎯 Project Motivation
 
 This project was built as a portfolio-ready, real-world system to demonstrate:
 
@@ -177,11 +182,13 @@ Scalable backend and microservice design
 
 Production-aware deployment considerations
 
-👩‍💻 Author
+---
+### 👩‍💻 Author
 
 Fatemeh Ahmadinejad
 Computer Engineering – Software Engineering
 
-📄 License
+---
+### 📄 License
 
 For educational and portfolio purposes only.
