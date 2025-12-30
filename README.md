@@ -78,7 +78,7 @@ FAISS (CPU)
 
 Sentence Transformers (text embeddings)
 
-Torch / Torchvision (image embeddings)
+CLIP (image embeddings via Torch / Torchvision)
 
 ### Deployment & Infrastructure
 
@@ -153,7 +153,7 @@ Production-aware deployment considerations
 ---
 ### 👩‍💻 Author
 
-Fatemeh Ahmadinejad
+Fatima Ahmadinejad
 Computer Engineering – Software Engineering
 
 ---
