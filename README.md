@@ -39,29 +39,32 @@ Designed as a **portfolio-ready, production-aware project** with a focus on clea
 ---
 
 🧠 System Architecture
-flowchart LR
-    A[Client<br/>React] --> B[Node.js / Express API]
 
-    B --> C[(MongoDB Atlas)]
+The system follows a decoupled, service-oriented architecture designed for scalability and clear separation of concerns.
 
-    B --> D[FastAPI ML Service]
-    D --> C
-    D --> E[FAISS Vector Index]
+Client (React)
+Handles UI rendering, state management, and user interactions.
 
-    subgraph ML Service
-      D
-      E
-    end
+Backend API (Node.js / Express)
+Manages authentication, business logic, product management, orders, payments, and acts as the gateway between the client and other services.
 
-Architecture Notes
+Database (MongoDB Atlas)
+Stores users, products, orders, reviews, and metadata.
+Both the backend API and the ML service connect to MongoDB independently.
+
+ML Recommendation Service (FastAPI)
+A standalone microservice responsible for generating product recommendations using hybrid similarity methods.
+
+Vector Search Engine (FAISS)
+Used inside the ML service for efficient similarity search over product embeddings.
+
+Key architectural notes:
 
 Backend and ML service are fully decoupled
 
 Communication between services happens via HTTP
 
-Both backend and ML service connect independently to MongoDB
-
-Current recommender uses a static index, but supports dynamic updates on product lifecycle events
+The recommender currently uses a static index, but the architecture supports dynamic updates on product lifecycle events (create/update/delete)
 
 🛠️ Tech Stack
 Frontend
@@ -80,11 +83,11 @@ Node.js
 
 Express.js
 
-MongoDB (Mongoose)
+MongoDB with Mongoose
 
-JWT + Refresh Token Authentication
+JWT + Refresh Token authentication
 
-PayPal Sandbox
+PayPal Sandbox integration
 
 Machine Learning Service
 
@@ -94,11 +97,11 @@ NumPy
 
 FAISS (CPU)
 
-Sentence Transformers
+Sentence Transformers (text embeddings)
 
-Torch / Torchvision
+Torch / Torchvision (image embeddings)
 
-Deployment
+Deployment & Infrastructure
 
 Render (Free Tier)
 
@@ -107,60 +110,72 @@ MongoDB Atlas
 Cloudinary (image storage)
 
 📦 Repository Structure
-myshop/
-├── backend/        # Node.js / Express API
-├── frontend/       # React client
-├── recommender/    # ML microservice (separate repository)
-└── README.md
 
+The project is organized with clear separation between concerns:
 
-⚠️ The recommender service is maintained in a separate repository.
+backend/ – Node.js / Express API, database models, authentication, and business logic
 
-🚀 Getting Started (Local)
-1️⃣ Clone Repository
-git clone https://github.com/FatimaAhmadinejad/MyShop
-cd MyShop
+frontend/ – React client application
 
-2️⃣ Frontend Setup
-cd frontend
-npm install
-npm start
+recommender/ – ML microservice (FastAPI, maintained in a separate repository)
 
-3️⃣ Backend Setup
-cd backend
-npm install
-npm run dev
+README.md – Project documentation
 
+⚠️ The recommender service is maintained in a separate repository and can be deployed independently.
 
-4️⃣ ML Service Setup (Separate Repo)
-git clone https://github.com/FatimaAhmadinejad/Recommender
-cd Recommender
-pip install -r requirements.txt
-python build_embeddings.py
-uvicorn api:app --reload
+🚀 Getting Started (Local Development)
+Backend
 
+Install dependencies
+
+Configure environment variables
+
+Start the development server
+
+Frontend
+
+Install dependencies
+
+Connect to the backend API
+
+Run the React development server
+
+ML Service (Optional)
+
+Clone the recommender repository
+
+Install Python dependencies
+
+Build embeddings
+
+Start the FastAPI server
+
+The main application works without the ML service running locally.
+Recommendations will fall back to default behavior if the service is unavailable.
 
 🔮 Future Improvements
 
-Fully dynamic embedding updates (event-driven)
+Fully dynamic embedding updates using event-driven pipelines
 
-Real-time recommendations for new products
+Real-time recommendations for newly added products
 
-Advanced hybrid ranking using user interaction signals
+Advanced hybrid ranking based on user interaction signals
 
-Model optimization and inference latency reduction
+Model optimization and reduced inference latency
 
-Notification system (Email / SMS)
+User notification system (Email / SMS)
 
 🎯 Project Motivation
 
-This project was built to demonstrate:
+This project was built as a portfolio-ready, real-world system to demonstrate:
 
-Real-world system architecture
+Practical full-stack architecture decisions
 
-Scalable full-stack application design
+Clean separation between application logic and machine learning logic
 
-Practical integration of machine learning into production systems
+Scalable backend and microservice design
+
+Production-aware deployment considerations
 
 👩‍💻 Author
 
@@ -168,7 +183,5 @@ Fatemeh Ahmadinejad
 Computer Engineering – Software Engineering
 
 📄 License
-For educational and portfolio purposes.
 
-Copy code
-
+For educational and portfolio purposes only.
