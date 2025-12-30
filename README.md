@@ -121,6 +121,7 @@ python build_embeddings.py
 uvicorn api:app --reload
 
 
+
 "The main application works independently of a local ML service. Recommendations are served from the deployed ML service on Render."
 ---
 ### 🔮 Future Improvements
