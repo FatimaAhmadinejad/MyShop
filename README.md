@@ -5,6 +5,9 @@ Designed as a **portfolio-ready, production-aware project** with a focus on clea
 
 🔗 **Live Demo**: https://myshop-76pn.onrender.com/
 
+### ⚠️ Note: This project is a demo and does not have real users or live transactions.
+
+
 ---
 
 ## 🖼️ Screenshots
