@@ -28,24 +28,25 @@ const getProducts = asyncHandler(async (req, res) => {
   }
 
   // تنظیم sort بر اساس query
-  let sortOption = { createdAt: -1 } // default: جدیدترین‌ها
+  let sortOption = { createdAt: -1, _id: 1 }
 
-  switch (req.query.sort) {
-    case 'price_asc':
-      sortOption = { price: 1 }
-      break
-    case 'price_desc':
-      sortOption = { price: -1 }
-      break
-    case 'rating_asc':
-      sortOption = { rating: 1, numReviews: 1 }
-      break
-    case 'rating_desc':
-      sortOption = { rating: -1, numReviews: -1 }
-      break
-    default:
-      sortOption = { createdAt: -1 }
-  }
+switch (req.query.sort) {
+  case 'price_asc':
+    sortOption = { price: 1, _id: 1 }
+    break
+  case 'price_desc':
+    sortOption = { price: -1, _id: 1 }
+    break
+  case 'rating_asc':
+    sortOption = { rating: 1, numReviews: 1, _id: 1 }
+    break
+  case 'rating_desc':
+    sortOption = { rating: -1, numReviews: -1, _id: 1 }
+    break
+  default:
+    sortOption = { createdAt: -1, _id: 1 }
+}
+
 
   const count = await Product.countDocuments(filter)
 
