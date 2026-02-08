@@ -48,6 +48,19 @@ Designed as a **portfolio-ready, production-aware project** with a focus on clea
 ###  ⚠️The recommender currently uses a static index, but the architecture supports dynamic updates on product lifecycle events (create/update/delete)
 
 ---
+### 🔬 Research Perspective & Engineering Contributions
+
+This project serves as a practical case study in building and deploying a real-world AI-integrated system. It was designed to explore specific engineering and research challenges:
+
+· Solving the Integration Problem: The microservice architecture provides a clear solution for seamlessly integrating a Python-based ML model (CLIP + SBERT embeddings) into a JavaScript-based production web application, addressing a common industry hurdle.
+
+· Hybrid Recommender as a Research Prototype: The system implements a working prototype of a hybrid recommender that combines content-based (text) and image-based similarity. This serves as a testbed for future research into weighting mechanisms, multimodal fusion, and personalization.
+
+· Trade-off Analysis in Practice: The choice of FAISS for approximate search explicitly tackles the real-world trade-off between recommendation accuracy and system latency, demonstrating informed decision-making for production environments.
+
+· Foundation for Future Research: The current static embedding pipeline is architecturally prepared for evolution into a dynamic, event-driven system. This opens clear research directions in real-time embedding updates, model freshness, and A/B testing frameworks.
+
+---
 ### 🛠️ Tech Stack
 ### Frontend
 
