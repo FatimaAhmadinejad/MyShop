@@ -167,7 +167,7 @@ Scalable backend and microservice design
 Production-aware deployment considerations
 
 ---
-📄 **Full Project Documentation (DOCX)**: [Download](./Document.docx)
+📄 **Full Project Documentation (PDF)**: [Download](./Document.pdf)
 
 ---
 
