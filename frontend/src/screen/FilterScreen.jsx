@@ -4,6 +4,7 @@ import { Row, Col } from 'react-bootstrap';
 import Product from '../compontent/Product.jsx';
 import { useGetProductsQuery } from '../slices/apiSlice.js';
 import Paginate from '../compontent/Paginate.jsx';
+import { useEffect } from 'react';
 
 const FilterScreen = () => {
   const location = useLocation();
