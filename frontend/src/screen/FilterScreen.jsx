@@ -33,9 +33,16 @@ const maxPriceValue = maxPrice !== '' ? Number(maxPrice) : '';
     sort,
     pageNumber
   });
-  
-  
 
+  useEffect(() => {
+      document.body.classList.add('filter-screen');
+  
+      
+      return () => {
+        document.body.classList.remove('home-screen');
+      };
+    }, []);
+  
 
   return (
     <div>
