@@ -4,6 +4,7 @@ import { useGetProductsQuery } from '../slices/apiSlice';
 import Product from '../compontent/Product';
 import { Row, Col } from 'react-bootstrap';
 import Paginate from '../compontent/Paginate';
+import { useEffect } from 'react';
 
 const CategoryScreen = () => {
   const { categoryName } = useParams();
