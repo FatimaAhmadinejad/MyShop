@@ -326,7 +326,7 @@ const ProductScreen = () => {
                           <strong>{item.name}</strong>
                         </Card.Title>
                         <Card.Text as='div'>
-                         <Rating value={product.rating || 0} text={`${product.numReviews || 0}reviews`}/>
+                         <Rating value={item.rating || 0} text={`${item.numReviews || 0}reviews`}/>
                          </Card.Text>
                         <Card.Text as="h3">
                           ${item.price}
