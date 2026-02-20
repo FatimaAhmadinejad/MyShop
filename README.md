@@ -155,20 +155,15 @@ User notification system (Email / SMS)
 
 ---
 ### 🎯 Project Motivation
-
 This project was built as a portfolio-ready, real-world system to demonstrate:
 
-Practical full-stack architecture decisions
+- Practical full-stack architecture decisions
+- Clean separation between application logic and machine learning logic
+- Scalable backend and microservice design
+- Production-aware deployment considerations
 
-Clean separation between application logic and machine learning logic
-
-Scalable backend and microservice design
-
-Production-aware deployment considerations
-
-### UI/UX Design:
+### 🎨 UI/UX Design
 Designed from scratch to connect the digital platform with the warmth of the real world, creating a more engaging and human-centered shopping experience.
-
 ---
 📄 **Full Project Documentation (PDF)**: [Download](./Document.pdf)
 
