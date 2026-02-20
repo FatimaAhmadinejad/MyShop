@@ -79,7 +79,18 @@ table th {
 }
 
 body {
-  background-color: #303130; 
+  color: #ffffff !important;
+  background-image: url(./green_background.jpeg); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+table, table td, table th {
+  color: #ffffff !important;
 }
 
 .btn {
