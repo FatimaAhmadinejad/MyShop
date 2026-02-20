@@ -7,6 +7,7 @@ import ProductCarousel from '../compontent/ProductCarousel.jsx'
 import Paginate from '../compontent/Paginate.jsx'
 import Meta from '../compontent/Meta.jsx'
 import { useGetProductsQuery } from '../slices/productsApiSlice'
+import { useEffect } from 'react';
 const Homescreen = () => {
   let { pageNumber = 1, keyword } = useParams();
   const page = Number(pageNumber) || 1;
