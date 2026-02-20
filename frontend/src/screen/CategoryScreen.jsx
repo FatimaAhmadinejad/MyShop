@@ -15,6 +15,15 @@ const CategoryScreen = () => {
     pageNumber: currentPage,
   });
 
+  useEffect(() => {
+      document.body.classList.add('categories-screen');
+  
+      
+      return () => {
+        document.body.classList.remove('categories-screen');
+      };
+    }, []);
+
   React.useEffect(() => {
     refetch();
   }, [categoryName, currentPage, refetch]);
