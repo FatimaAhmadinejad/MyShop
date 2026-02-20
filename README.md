@@ -162,8 +162,9 @@ This project was built as a portfolio-ready, real-world system to demonstrate:
 - Scalable backend and microservice design
 - Production-aware deployment considerations
 
-### 🎨 UI/UX Design
-Designed from scratch to connect the digital platform with the warmth of the real world, creating a more engaging and human-centered shopping experience.
+ ### 🎨 UI/UX Design
+ Designed from scratch to connect the digital platform with the warmth of the real world, creating a more engaging and human-centered shopping experience.
+
 ---
 📄 **Full Project Documentation (PDF)**: [Download](./Document.pdf)
 
