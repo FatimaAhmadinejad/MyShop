@@ -15,6 +15,16 @@ const Homescreen = () => {
   keyword,
   pageNumber: page,
 });
+  
+useEffect(() => {
+    document.body.classList.add('home-screen');
+
+    
+    return () => {
+      document.body.classList.remove('home-screen');
+    };
+  }, []);
+
   return (
     <>
     {!keyword ? <ProductCarousel/> : <Link to='/' className='btn btn-light'>Go Back</Link>}
