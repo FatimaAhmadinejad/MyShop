@@ -94,18 +94,42 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url(./green_background.jpeg);
+
+  background-image: url(./myshop_background.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  z-index: -1; 
-  filter: blur(4px);
+
+  z-index: -2;
+
+  filter: blur(6px) brightness(0.6);
 }
+
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 34, 10, 0.4),
+  rgba(15, 48, 15, 0.5)
+  );
+
+  z-index: -1;
+}
+
+
 body.home-screen::before,
 body.filter-screen::before,
 body.categories-screen::before {
-  filter: none;
+  filter:  blur(2px) brightness(0.6);
 }
+
 
 
 table, table td, table th {
